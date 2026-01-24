@@ -1,28 +1,24 @@
 package com.febrio.stepdef;
 
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
-import io.cucumber.java.PendingException;
+import com.febrio.Hooks;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
+import static com.febrio.Hooks.driver;
+
 
 public class LoginStepDef {
-    public static WebDriver driver;
+    WebDriver driver = Hooks.driver;
+
 
     // Locators
     By usernameInputText = By.cssSelector("input#user-name");
