@@ -30,8 +30,8 @@ public class CartPage {
     public void userClickCartIcon() {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
-        By cartIcon = By.cssSelector("[data-test='shopping-cart-link']");
-        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[data-test='shopping-cart-link']")));
+        By cartIcon = By.cssSelector("a.shopping_cart_link");
+        wait.until(ExpectedConditions.elementToBeClickable(cartIcon)).click();
         driver.findElement(cartIcon).click();
         By cartItem = By.cssSelector("[data-test='inventory-item-name']");
         wait.until(ExpectedConditions.visibilityOfElementLocated(cartItem));
