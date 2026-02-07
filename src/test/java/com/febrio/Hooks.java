@@ -2,9 +2,10 @@ package com.febrio;
 
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,13 +17,9 @@ public class Hooks {
     @Before
     public void setUp() {
 
-        System.setProperty(
-                "webdriver.edge.driver",
-                "D:\\edgedriver_win64\\msedgedriver.exe"
-        );
+        ChromeOptions options = new ChromeOptions();
 
-        EdgeOptions options = new EdgeOptions();
-
+        // Disable password popup
         Map<String, Object> prefs = new HashMap<>();
         prefs.put("credentials_enable_service", false);
         prefs.put("profile.password_manager_enabled", false);
@@ -32,7 +29,13 @@ public class Hooks {
         options.addArguments("--disable-infobars");
         options.addArguments("--disable-save-password-bubble");
 
-        driver = new EdgeDriver(options);
+        // Headless mode for GitHub Actions
+        options.addArguments("--headless=new");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--window-size=1920,1080");
+
+        driver = WebDriverManager.chromedriver().capabilities(options).create();
         driver.manage().window().maximize();
     }
 

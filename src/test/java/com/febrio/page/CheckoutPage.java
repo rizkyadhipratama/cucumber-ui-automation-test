@@ -3,7 +3,9 @@ package com.febrio.page;
 import com.febrio.Hooks;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -19,12 +21,18 @@ public class CheckoutPage {
     }
 //    ("user click checkout button")
     public void userClickCheckoutButton() {
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
         By checkoutButton = By.id("checkout");
 
-        wait.until(ExpectedConditions.elementToBeClickable(checkoutButton))
-                .click();
+        wait.until(ExpectedConditions.urlContains("cart.html"));
+
+        WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(checkoutButton));
+        btn.click();
+
+        // pastikan pindah ke halaman step one
+        wait.until(ExpectedConditions.urlContains("checkout-step-one.html"));
+
     }
 
 //    ("user input first name with {string} and last name with {string} and postal code with {string}")
@@ -39,10 +47,6 @@ public class CheckoutPage {
 
         System.out.println(driver.getCurrentUrl());
 
-        driver.findElement(firstNameField).sendKeys(FirstName);
-        driver.findElement(lastNameField).sendKeys(LastName);
-        driver.findElement(postalCodeField).sendKeys(PostalCode);
-
     }
 
 //    ("user click continue")
@@ -55,7 +59,7 @@ public class CheckoutPage {
 
 //    ("user in checkout overview page")
     public void userInCheckoutOverviewPage() {
-        By itemName = By.cssSelector(".inventory_item_name");
+        By itemName = By.cssSelector("[data-test='inventory-item-name']");
         By paymentInfo = By.cssSelector("[data-test='payment-info-label']");
         By shipInfo = By.cssSelector("[data-test='shipping-info-label']");
         By priceTotal = By.cssSelector("[data-test='total-info-label']");
