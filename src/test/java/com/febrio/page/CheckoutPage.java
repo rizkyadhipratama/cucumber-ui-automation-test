@@ -21,7 +21,7 @@ public class CheckoutPage {
     }
 //    ("user click checkout button")
     public void userClickCheckoutButton() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 
         By checkoutButton = By.id("checkout");
 
@@ -59,10 +59,14 @@ public class CheckoutPage {
 
 //    ("user in checkout overview page")
     public void userInCheckoutOverviewPage() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+
         By itemName = By.cssSelector("[data-test='inventory-item-name']");
         By paymentInfo = By.cssSelector("[data-test='payment-info-label']");
         By shipInfo = By.cssSelector("[data-test='shipping-info-label']");
         By priceTotal = By.cssSelector("[data-test='total-info-label']");
+
+        wait.until(ExpectedConditions.urlContains("checkout-step-two.html"));
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(itemName));
         wait.until(ExpectedConditions.visibilityOfElementLocated(paymentInfo));
